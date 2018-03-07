@@ -15,9 +15,9 @@ def home(request):
     }
     return render(request, "home.html", context)
 
-def home2(request):
-    return render(request, "home2.html", {})
+def about(request):
+    return render(request, "about.html", {})
 
 
-def home3(request):
-    return render(request, "home3.html", {})
+def contact(request):
+    return render(request, "contact.html", {})
