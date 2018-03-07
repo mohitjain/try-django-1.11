@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 from django.shortcuts import render
 import random
+from django.views import View
 
 # Create your views here.
 def home(request):
@@ -21,3 +22,10 @@ def about(request):
 
 def contact(request):
     return render(request, "contact.html", {})
+
+
+class ContactView(View):
+
+    def get(self, request, *args, **kwargs):
+        context = {}
+        return render(request, "contact.html", context)
