@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+{{ block.super }}
+<h1> {{ object.name }}</h1>
+<small> {{ object.category }}</small>
+<p> {{ object.location }}</p>
+
+{% endblock content %}
