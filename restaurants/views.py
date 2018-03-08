@@ -1,21 +1,21 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.shortcuts import render
+from django.db.models import Q
 import random
 from django.views import View
-from django.views.generic.base import TemplateView
+from django.views.generic import ListView, TemplateView
+from .models import RestaurantLocation
 
-class HomeView(TemplateView):
-    template_name = "home.html"
-    def get_context_data(self, **kwargs):
-        context = super(HomeView, self).get_context_data(**kwargs)
-        print(context)
 
-        num = random.randint(0, 1000000)
-        some_list = [num, random.randint(0, 1000000), random.randint(0, 1000000)]
-        context = {
-         "html_var": "Some Data",
-         "num": num,
-         "some_list": some_list
-        }
-        return context
+class RestuarantListView(ListView):
+    def get_queryset(self):
+        slug = self.kwargs.get('slug')
+        if slug:
+            queryset = RestaurantLocation.objects.filter(
+                Q(category__iexact=slug) |
+                Q(category__icontains=slug)
+            )
+        else:
+            queryset = RestaurantLocation.objects.all()
+        return queryset
