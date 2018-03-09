@@ -7,7 +7,7 @@ import random
 from django.views import View
 from django.views.generic import ListView, TemplateView, DetailView, CreateView
 from .models import RestaurantLocation
-from .forms import RestaurantCreateForm, RestaurantLocationCreateForm
+from .forms import RestaurantLocationCreateForm
 
 class RestuarantListView(ListView):
     def get_queryset(self):
