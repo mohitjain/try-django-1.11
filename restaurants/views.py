@@ -9,20 +9,6 @@ from django.views.generic import ListView, TemplateView, DetailView, CreateView
 from .models import RestaurantLocation
 from .forms import RestaurantCreateForm, RestaurantLocationCreateForm
 
-
-def restaurant_createview(request):
-    form = RestaurantLocationCreateForm(request.POST or None)
-    errors = None
-    if form.is_valid():
-        form.save()
-        return HttpResponseRedirect("/restuarants/")
-    if form.errors:
-        errors = form.errors
-
-    template_name = 'restaurants/form.html'
-    context = {"form": form, "errors": errors}
-    return render(request, template_name, context)
-
 class RestuarantListView(ListView):
     def get_queryset(self):
         slug = self.kwargs.get('slug')
@@ -50,16 +36,7 @@ class RestuarantDetailView(DetailView):
         print context
         return context
 
-    # def get_object(self, *args, **kwargs):
-    #     rest_id =  self.kwargs.get('rest_id')
-    #     obj = get_object_or_404(RestaurantLocation, id=rest_id)
-    #     return obj
-
 class RestuarantCreateView(CreateView):
     form_class = RestaurantLocationCreateForm
     template_name = 'restaurants/form.html'
     success_url = "/restuarants/"
-    # def get_object(self, *args, **kwargs):
-    #     rest_id =  self.kwargs.get('rest_id')
-    #     obj = get_object_or_404(RestaurantLocation, id=rest_id)
-    #     return obj
