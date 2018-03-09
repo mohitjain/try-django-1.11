@@ -5,22 +5,17 @@ from django.db.models import Q
 from django.http import HttpResponse, HttpResponseRedirect
 import random
 from django.views import View
-from django.views.generic import ListView, TemplateView, DetailView
+from django.views.generic import ListView, TemplateView, DetailView, CreateView
 from .models import RestaurantLocation
-from .forms import RestaurantCreateForm
+from .forms import RestaurantCreateForm, RestaurantLocationCreateForm
 
 
 def restaurant_createview(request):
-    form = RestaurantCreateForm(request.POST or None)
+    form = RestaurantLocationCreateForm(request.POST or None)
     errors = None
     if form.is_valid():
-        obj = RestaurantLocation.objects.create(
-                name     = form.cleaned_data.get('name'),
-                location = form.cleaned_data.get('location'),
-                category = form.cleaned_data.get('category')
-
-            )
-        return HttpResponseRedirect("/restaurants/")
+        form.save()
+        return HttpResponseRedirect("/restuarants/")
     if form.errors:
         errors = form.errors
 
@@ -55,6 +50,15 @@ class RestuarantDetailView(DetailView):
         print context
         return context
 
+    # def get_object(self, *args, **kwargs):
+    #     rest_id =  self.kwargs.get('rest_id')
+    #     obj = get_object_or_404(RestaurantLocation, id=rest_id)
+    #     return obj
+
+class RestuarantCreateView(CreateView):
+    form_class = RestaurantLocationCreateForm
+    template_name = 'restaurants/form.html'
+    success_url = "/restuarants/"
     # def get_object(self, *args, **kwargs):
     #     rest_id =  self.kwargs.get('rest_id')
     #     obj = get_object_or_404(RestaurantLocation, id=rest_id)

@@ -19,14 +19,14 @@ from django.views.generic.base import TemplateView
 from restaurants.views import (
     RestuarantListView,
     RestuarantDetailView,
-    restaurant_createview,
+    RestuarantCreateView,
 )
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', TemplateView.as_view(template_name='home.html')),
     url(r'^about/$', TemplateView.as_view(template_name='about.html')),
-    url(r'^restuarants/create/$', restaurant_createview),
+    url(r'^restuarants/create/$', RestuarantCreateView.as_view()),
     url(r'^restuarants/$', RestuarantListView.as_view()),
     #url(r'^restuarants/(?P<slug>\w+)/$', RestuarantListView.as_view()),
     url(r'^restuarants/(?P<slug>[\w-]+)/$', RestuarantDetailView.as_view()),
